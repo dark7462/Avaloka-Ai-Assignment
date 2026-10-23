@@ -104,39 +104,3 @@ public:
         }
     }
 };
-
-int main() {
-    const int CAPACITY = 1000;
-    const int OPERATIONS = 1000000;
-
-    LRUCache cache(CAPACITY);
-
-    auto start = chrono::steady_clock::now();
-
-    for (int i = 0; i < OPERATIONS; i++) {
-        cache.put(i, i * 10);
-        cache.get(i);
-
-        // Mostly cache misses
-        if (i >= CAPACITY)
-            cache.get(i - CAPACITY);
-    }
-
-    auto end = chrono::steady_clock::now();
-
-    cout << "Operations: " << OPERATIONS << '\n';
-    cout << "Capacity: " << CAPACITY << '\n';
-    cout << "Execution time: "
-         << chrono::duration<double, milli>(end - start).count()
-         << " ms\n";
-
-    cout << "Last key: " << cache.get(OPERATIONS - 1) << '\n';
-    cout << "Evicted key: " << cache.get(0) << '\n';
-
-    // LRUCache cache1(0);
-
-    // cache1.put(1, 100);
-
-    // cout << cache1.get(1) << endl;
-
-}
